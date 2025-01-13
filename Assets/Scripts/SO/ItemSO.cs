@@ -8,6 +8,7 @@ public class ItemSO : ScriptableObject
     public ERarity rarity;
     public Sprite sprite;
     public GameObject prefab; // Reference the prefab directly
+    public float itemScale;
     public int maxQuantity;
     public int price;
     public bool canBeEquipped;

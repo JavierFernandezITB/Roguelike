@@ -28,6 +28,7 @@ public abstract class AItem : ServicesReferences
         }
         catch (Exception e) { }
         GameObject newPhysicalItem = Instantiate(itemData.prefab);
+        newPhysicalItem.transform.localScale = new Vector3(itemData.itemScale, itemData.itemScale, itemData.itemScale);
         newPhysicalItem.transform.parent = weaponParent.transform;
         newPhysicalItem.transform.position = new Vector3(character.transform.position.x + 0.575f, character.transform.position.y, character.transform.position.z);
         weaponParent.GetComponent<WeaponParent>().currentItem = newPhysicalItem.GetComponent<AItem>();

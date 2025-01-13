@@ -33,7 +33,8 @@ public class EnemyAttackingState : AEnemyBaseState
     {
         enemy.spriteRenderer.enabled = false;
         enemy.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        enemy.transform.GetComponent<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(1);
-        enemy.DestroyEntity();
+        enemy.SwitchState(enemy.deadState);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
@@ -38,9 +39,6 @@ public class InventoryManagerService : ServicesReferences
     {
         base.Persist<InventoryManagerService>();
 
-        //test
-        //inventoryItems.Add(testItem);
-
         HideInventoryUI();
 
         controls = new CharacterControls();
@@ -50,6 +48,9 @@ public class InventoryManagerService : ServicesReferences
 
         InstantiateInventory();
         LoadInventoryItems();
+
+        //test
+        AddItemToInventory(testItem, false);
     }
 
     public void Update()
@@ -103,7 +104,7 @@ public class InventoryManagerService : ServicesReferences
         }
     }
 
-    public void AddItemToInventory(AItem newItem)
+    public void AddItemToInventory(AItem newItem, bool shouldDestroy = true)
     {
         for (int i = 0; i < inventoryItems.Count; i++)
         {
@@ -133,7 +134,8 @@ public class InventoryManagerService : ServicesReferences
         newInvItem.itemData = newItem.itemData;
         newInvItem.quantity = 1;
         inventoryItems.Add(newInvItem);
-        Destroy(newItem.gameObject);
+        if (shouldDestroy)
+            Destroy(newItem.gameObject);
         LoadInventoryItems();
         Debug.Log("Item added to inventory.");
     }
@@ -180,6 +182,7 @@ public class InventoryManagerService : ServicesReferences
                     inventoryItems[i] = currentItem.ChangeQuantity(currentItem.quantity - 1);
                     droppedItem = Instantiate((item.itemData.prefab) as GameObject);
                     droppedItem.transform.position = new Vector2(character.transform.position.x, character.transform.position.y);
+                    droppedItem.transform.localScale = new Vector3(currentItem.itemData.itemScale, currentItem.itemData.itemScale, currentItem.itemData.itemScale);
                     LoadInventoryItems();
                     return;
                 } else
@@ -187,6 +190,7 @@ public class InventoryManagerService : ServicesReferences
                     inventoryItems.Remove(currentItem);
                     droppedItem = Instantiate((item.itemData.prefab) as GameObject);
                     droppedItem.transform.position = new Vector2(character.transform.position.x, character.transform.position.y);
+                    droppedItem.transform.localScale = new Vector3(currentItem.itemData.itemScale, currentItem.itemData.itemScale, currentItem.itemData.itemScale);
                     LoadInventoryItems();
                     inventoryDescription.ResetDescription();
                     inventoryActions.ResetActions();

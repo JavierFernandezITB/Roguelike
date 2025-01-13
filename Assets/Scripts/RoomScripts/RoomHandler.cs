@@ -5,9 +5,32 @@ using UnityEngine;
 public class RoomHandler : ServicesReferences
 {
     public bool isRoomCompleted = false;
+    public int enemiesToSpawn = 5;
+    public int maxEnemiesInRoom = 4;
     public int enemiesRemaining = 0;
     public bool isKeyDropped = false;
     public GameObject keyPrefab;
+    public List<GameObject> enemiesPool;
+    public List<GameObject> spawnedEnemiesPool;
+    public List<GameObject> spawnPoints;
+    public RunManager runManager;
+    public RoomManagerService roomManagerService;
+
+    private void Start()
+    {
+        roomManagerService = GameObject.Find("/RoomManagerService").GetComponent<RoomManagerService>();
+        runManager = GameObject.Find("/RunManager").GetComponent<RunManager>();
+        enemiesPool = new List<GameObject>();
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            GameObject newEnemy = Instantiate(runManager.availableEnemyList[Random.Range(0, runManager.availableEnemyList.Count)]);
+            newEnemy.GetComponent<EnemyStateManager>().currentRoomHandler = this;
+            newEnemy.SetActive(false);
+            enemiesPool.Add(newEnemy);
+            enemiesRemaining += 1;
+        }
+
+    }
 
     private void Update()
     {
@@ -16,6 +39,18 @@ public class RoomHandler : ServicesReferences
             isKeyDropped = true;
             GameObject key = Instantiate(keyPrefab);
             key.transform.position = new Vector2(transform.position.x, transform.position.y);
+        }
+
+        if (spawnedEnemiesPool.Count < maxEnemiesInRoom && gameObject == roomManagerService.GetCurrentRoomObject() && !isRoomCompleted)
+        {
+            foreach (GameObject enemy in enemiesPool)
+            {
+                EnemyStateManager esm = enemy.GetComponent<EnemyStateManager>();
+                enemiesPool.Remove(enemy);
+                spawnedEnemiesPool.Add(enemy);
+                enemy.SetActive(true);
+                enemy.transform.position = spawnPoints[Random.Range(0, spawnPoints.Count)].transform.position;
+            }
         }
     }
 

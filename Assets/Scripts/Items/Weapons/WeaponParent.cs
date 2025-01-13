@@ -12,6 +12,7 @@ public class WeaponParent : MonoBehaviour
 
     public AItem currentItem;
     public Animator animator;
+    public Vector2 direction;
 
     private void Start()
     {
@@ -25,7 +26,7 @@ public class WeaponParent : MonoBehaviour
             weaponRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
             animator = transform.GetChild(0).GetComponent<Animator>();
             MousePointerPos = CSM.mousePos;
-            Vector2 direction = (MousePointerPos - (Vector2)transform.position).normalized;
+            direction = (MousePointerPos - (Vector2)transform.position).normalized;
             //                                  casteamos la posicion para hacerla un vector2.
             transform.right = direction;
 
@@ -40,14 +41,18 @@ public class WeaponParent : MonoBehaviour
             if (transform.eulerAngles.z > 0 && transform.eulerAngles.z < 180)
                 weaponRenderer.sortingOrder = -1;
             else
-                weaponRenderer.sortingOrder = 0;
+                weaponRenderer.sortingOrder = 1;
         }
         catch { }
     }
 
     public void PerformAttack(InputAction.CallbackContext obj)
     {
-        animator.SetTrigger("Attack");
+        try
+        {
+            animator.SetTrigger("Attack");
+        }
+        catch { }
         currentItem.Attack();
     }
 }

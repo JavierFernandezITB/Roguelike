@@ -17,6 +17,7 @@ MonoBehaviour:
   rarity: 0
   sprite: {fileID: 1090780085, guid: b181e33eb18c54045aac331ad46fa2f4, type: 3}
   prefab: {fileID: 1074644099724612341, guid: e1a528f708ba5ad42a069292ba552e56, type: 3}
+  itemScale: 1
   maxQuantity: 20
   price: 100
   canBeEquipped: 0
