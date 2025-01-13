@@ -27,12 +27,14 @@ public class ItemSlot : ServicesReferences
         isSlotEmpty = true;
     }
 
-    public void SetData(AItem item)
+    public void SetData(InventoryItem item)
     {
+        if (item.isEmpty)
+            return;
         itemImageSlotObject.gameObject.SetActive(true);
         itemImageSlotObject.sprite = item.itemData.sprite;
         itemQuantityText.text = item.quantity.ToString();
-        itemReference = item;
+        itemReference = item.itemData.prefab.GetComponent<AItem>();
         isSlotEmpty = false;
     }
 

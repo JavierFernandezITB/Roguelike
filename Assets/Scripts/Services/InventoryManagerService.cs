@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class InventoryManagerService : ServicesReferences
@@ -20,7 +21,7 @@ public class InventoryManagerService : ServicesReferences
 
     List<ItemSlot> inventorySlots = new List<ItemSlot>();
 
-    public List<AItem> inventoryItems = new List<AItem>();
+    public List<InventoryItem> inventoryItems = new List<InventoryItem>();
 
     public AItem testItem;
 
@@ -102,42 +103,67 @@ public class InventoryManagerService : ServicesReferences
         }
     }
 
-    public void AddItemToInventory(GameObject obj)
+    public void AddItemToInventory(AItem newItem)
     {
-        bool done = false;
-
-        AItem item = obj.GetComponent<AItem>();
-
-
         for (int i = 0; i < inventoryItems.Count; i++)
         {
-            AItem currentItem = inventoryItems[i];
-            if (currentItem.itemData.itemName == item.itemData.itemName)
+            InventoryItem currentItem = inventoryItems[i];
+            if (currentItem.itemData.itemName == newItem.itemData.itemName)
             {
                 if (currentItem.quantity < currentItem.itemData.maxQuantity)
                 {
-                    Debug.Log("kekw");
-                    currentItem.quantity += 1;
-                    Destroy(item.gameObject);
+                    Debug.Log("Changed quantity");
+                    Debug.Log(currentItem.quantity);
+                    inventoryItems[i] = currentItem.ChangeQuantity(currentItem.quantity + 1);
+                    Destroy(newItem.gameObject);
                     LoadInventoryItems();
-                    done = true;
-                    break;
+                    Debug.Log("Item stacked successfully.");
+                    return;
                 }
             }
         }
 
         if (inventoryItems.Count >= inventorySize)
         {
-            Debug.Log("Inventory full.");
+            Debug.Log("Inventory is full. Cannot add new item.");
             return;
         }
 
-        if (done)
-            return;
-
-        inventoryItems.Add(item);
-        Destroy(item.gameObject);
+        InventoryItem newInvItem = InventoryItem.GetEmptyItem();
+        newInvItem.itemData = newItem.itemData;
+        newInvItem.quantity = 1;
+        inventoryItems.Add(newInvItem);
+        Destroy(newItem.gameObject);
         LoadInventoryItems();
+        Debug.Log("Item added to inventory.");
+    }
+
+
+    public void DeleteItemFromInventory(AItem item)
+    {
+        for (int i = 0; i < inventoryItems.Count; i++)
+        {
+            InventoryItem currentItem = inventoryItems[i];
+            if (currentItem.itemData.itemName == item.itemData.itemName)
+            {
+                if (currentItem.quantity > 1)
+                {
+                    inventoryItems[i] = currentItem.ChangeQuantity(currentItem.quantity - 1);
+                    LoadInventoryItems();
+                    inventoryDescription.ResetDescription();
+                    inventoryActions.ResetActions();
+                    return;
+                } else
+                {
+                    inventoryItems.Remove(currentItem);
+                    LoadInventoryItems();
+                    inventoryDescription.ResetDescription();
+                    inventoryActions.ResetActions();
+                    return;
+                }
+
+            }
+        }
     }
 
     public void DropItemFromInventory(AItem item)
@@ -146,28 +172,29 @@ public class InventoryManagerService : ServicesReferences
         GameObject character = GameObject.Find("/Character");
         for (int i = 0; i < inventoryItems.Count; i++)
         {
-            AItem currentItem = inventoryItems[i];
+            InventoryItem currentItem = inventoryItems[i];
             if (currentItem.itemData.itemName == item.itemData.itemName)
             {
                 if (currentItem.quantity > 1)
                 {
-                    currentItem.quantity -= 1;
+                    inventoryItems[i] = currentItem.ChangeQuantity(currentItem.quantity - 1);
                     droppedItem = Instantiate((item.itemData.prefab) as GameObject);
                     droppedItem.transform.position = new Vector2(character.transform.position.x, character.transform.position.y);
                     LoadInventoryItems();
                     return;
+                } else
+                {
+                    inventoryItems.Remove(currentItem);
+                    droppedItem = Instantiate((item.itemData.prefab) as GameObject);
+                    droppedItem.transform.position = new Vector2(character.transform.position.x, character.transform.position.y);
+                    LoadInventoryItems();
+                    inventoryDescription.ResetDescription();
+                    inventoryActions.ResetActions();
+                    return;
                 }
+
             }
         }
-
-        Debug.Log("abupas");
-        inventoryItems.Remove(item);
-        Debug.Log(inventoryItems.Count);
-        droppedItem = Instantiate((item.itemData.prefab) as GameObject);
-        droppedItem.transform.position = new Vector2(character.transform.position.x, character.transform.position.y);
-        LoadInventoryItems();
-        inventoryDescription.ResetDescription();
-        inventoryActions.ResetActions();
     }
 
     private void HandleSwap(ItemSlot obj)
@@ -220,5 +247,31 @@ public class InventoryManagerService : ServicesReferences
         inventoryDescription.ResetDescription();
         inventoryActions.ResetActions();
         areActionsSet = false;
+    }
+}
+
+public struct InventoryItem
+{
+    public int quantity;
+    public ItemSO itemData;
+
+    public bool isEmpty => itemData == null;
+
+    public InventoryItem ChangeQuantity(int newQuantity)
+    {
+        return new InventoryItem()
+        {
+            itemData = this.itemData,
+            quantity = newQuantity,
+        };
+    }
+
+    public static InventoryItem GetEmptyItem()
+    {
+        return new InventoryItem()
+        {
+            itemData = null,
+            quantity = 0,
+        };
     }
 }

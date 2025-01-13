@@ -7,21 +7,39 @@ using UnityEngine.InputSystem;
 public abstract class AItem : ServicesReferences
 {
     public ItemSO itemData;
-    public int quantity;
 
     private bool isPlayerInRange = false;
+    public bool isEquipped = false;
     private CharacterControls controls;
 
     private Action<InputAction.CallbackContext> onPickupAction;
 
     public abstract void Use();
 
-    public abstract void Equip();
+    public abstract void Attack();
+
+    public void Equip()
+    {
+        GameObject character = GameObject.Find("/Character");
+        GameObject weaponParent = GameObject.Find("/Character/WeaponParent");
+        try 
+        {
+            Destroy(weaponParent.transform.GetChild(0).gameObject);
+        }
+        catch (Exception e) { }
+        GameObject newPhysicalItem = Instantiate(itemData.prefab);
+        newPhysicalItem.transform.parent = weaponParent.transform;
+        newPhysicalItem.transform.position = new Vector3(character.transform.position.x + 0.575f, character.transform.position.y, character.transform.position.z);
+        weaponParent.GetComponent<WeaponParent>().currentItem = newPhysicalItem.GetComponent<AItem>();
+        newPhysicalItem.GetComponent<AItem>().isEquipped = true;
+    }
 
     public abstract void Passive();
 
     public void Drop()
     {
+        isEquipped = false;
+        InventoryManagerService inventoryManagerService = GameObject.Find("InventoryManagerService").GetComponent<InventoryManagerService>();
         inventoryManagerService.DropItemFromInventory(this);
     }
 
@@ -69,6 +87,7 @@ public abstract class AItem : ServicesReferences
     public void OnPickup() 
     {
         controls.Character.Pickup.performed -= onPickupAction;
-        inventoryManagerService.AddItemToInventory(this.gameObject);
+        if (!isEquipped)
+            inventoryManagerService.AddItemToInventory(this);
     }
 }

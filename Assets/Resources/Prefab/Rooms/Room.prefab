@@ -3537,6 +3537,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRoomCompleted: 0
+  enemiesRemaining: 0
+  isKeyDropped: 0
+  keyPrefab: {fileID: 1074644099724612341, guid: e1a528f708ba5ad42a069292ba552e56, type: 3}
 --- !u!1 &5248789688887816332
 GameObject:
   m_ObjectHideFlags: 0

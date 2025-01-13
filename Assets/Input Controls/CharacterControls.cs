@@ -53,6 +53,24 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePointerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""ce6d779b-49d8-4ae9-93a1-312c83b3d935"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c9451bc-b6ca-4af2-a79d-276f27a4dd2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +150,28 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70e121ca-e683-4721-9861-91b774f92ffe"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePointerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86d15a09-8ba3-4347-8b3f-f62054c6f776"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +183,8 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
         m_Character_Move = m_Character.FindAction("Move", throwIfNotFound: true);
         m_Character_Pickup = m_Character.FindAction("Pickup", throwIfNotFound: true);
         m_Character_ToggleInventory = m_Character.FindAction("ToggleInventory", throwIfNotFound: true);
+        m_Character_MousePointerPosition = m_Character.FindAction("MousePointerPosition", throwIfNotFound: true);
+        m_Character_Attack = m_Character.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +249,8 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Move;
     private readonly InputAction m_Character_Pickup;
     private readonly InputAction m_Character_ToggleInventory;
+    private readonly InputAction m_Character_MousePointerPosition;
+    private readonly InputAction m_Character_Attack;
     public struct CharacterActions
     {
         private @CharacterControls m_Wrapper;
@@ -214,6 +258,8 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Character_Move;
         public InputAction @Pickup => m_Wrapper.m_Character_Pickup;
         public InputAction @ToggleInventory => m_Wrapper.m_Character_ToggleInventory;
+        public InputAction @MousePointerPosition => m_Wrapper.m_Character_MousePointerPosition;
+        public InputAction @Attack => m_Wrapper.m_Character_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +278,12 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
             @ToggleInventory.started += instance.OnToggleInventory;
             @ToggleInventory.performed += instance.OnToggleInventory;
             @ToggleInventory.canceled += instance.OnToggleInventory;
+            @MousePointerPosition.started += instance.OnMousePointerPosition;
+            @MousePointerPosition.performed += instance.OnMousePointerPosition;
+            @MousePointerPosition.canceled += instance.OnMousePointerPosition;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -245,6 +297,12 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
             @ToggleInventory.started -= instance.OnToggleInventory;
             @ToggleInventory.performed -= instance.OnToggleInventory;
             @ToggleInventory.canceled -= instance.OnToggleInventory;
+            @MousePointerPosition.started -= instance.OnMousePointerPosition;
+            @MousePointerPosition.performed -= instance.OnMousePointerPosition;
+            @MousePointerPosition.canceled -= instance.OnMousePointerPosition;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -267,5 +325,7 @@ public partial class @CharacterControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
         void OnToggleInventory(InputAction.CallbackContext context);
+        void OnMousePointerPosition(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

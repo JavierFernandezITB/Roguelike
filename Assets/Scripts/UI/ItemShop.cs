@@ -61,7 +61,7 @@ public class ItemShop : ServicesReferences
         {
             GameObject newItem = Instantiate(obj.currentItemInSlot.prefab);
             newItem.transform.position = new Vector2(GameObject.Find("/Character").transform.position.x, GameObject.Find("/Character").transform.position.y);
-            inventoryManagerService.AddItemToInventory(newItem);
+            inventoryManagerService.AddItemToInventory(newItem.GetComponent<AItem>());
             Debug.Log($"Player bought {obj.currentItemInSlot.itemName} for {obj.currentItemInSlot.price}");
         }
         else

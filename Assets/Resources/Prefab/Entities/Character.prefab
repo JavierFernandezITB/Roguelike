@@ -1,5 +1,54 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3827535543413597923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8882447539957538130}
+  - component: {fileID: 1399004381018973372}
+  m_Layer: 8
+  m_Name: WeaponParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8882447539957538130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3827535543413597923}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6908063063700754771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1399004381018973372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3827535543413597923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d502c888dc4bc5a4facb239751263867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponRenderer: {fileID: 0}
+  MousePointerPos: {x: 0, y: 0}
+  CSM: {fileID: 0}
+  currentItem: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1 &6414352268654365936
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,7 +82,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8882447539957538130}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9134986608192259087
@@ -100,13 +150,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf5b42e696636c46b647a4df7ffb63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCharacterState: {fileID: 0}
-  idleState: {fileID: 0}
-  walkingState: {fileID: 0}
+  Health: 100
+  MaxHealth: 100
   Speed: 5
   animator: {fileID: 0}
+  weaponParent: {fileID: 0}
   moveInput: {x: 0, y: 0}
   moveDirection: {x: 0, y: 0, z: 0}
+  mousePos: {x: 0, y: 0, z: 0}
+  uiHealth: {fileID: 0}
 --- !u!50 &3664345257832301744
 Rigidbody2D:
   serializedVersion: 4
@@ -166,7 +218,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0031362772, y: -0.0031362176}
+  m_Offset: {x: 0.0031362772, y: -0.007175684}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -177,7 +229,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1066327, y: 1.0940875}
+  m_Size: {x: 0.9127381, y: 1.0536928}
   m_EdgeRadius: 0
 --- !u!95 &8970528542212682401
 Animator:

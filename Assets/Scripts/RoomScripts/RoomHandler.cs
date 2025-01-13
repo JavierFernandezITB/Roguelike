@@ -5,6 +5,20 @@ using UnityEngine;
 public class RoomHandler : ServicesReferences
 {
     public bool isRoomCompleted = false;
+    public int enemiesRemaining = 0;
+    public bool isKeyDropped = false;
+    public GameObject keyPrefab;
+
+    private void Update()
+    {
+        if (enemiesRemaining <= 0 && !isKeyDropped)
+        {
+            isKeyDropped = true;
+            GameObject key = Instantiate(keyPrefab);
+            key.transform.position = new Vector2(transform.position.x, transform.position.y);
+        }
+    }
+
     public void OpenAllDoors()
     {
         if (isRoomCompleted)

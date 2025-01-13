@@ -6,6 +6,8 @@ public class DoorKey : AItem
 {
     public override void Use()
     {
+        RoomManagerService roomManagerService = GameObject.Find("RoomManagerService").GetComponent<RoomManagerService>();
+        InventoryManagerService inventoryManagerService = GameObject.Find("InventoryManagerService").GetComponent<InventoryManagerService>();
         Vector2Int topOffset = new Vector2Int(0, 1);
         Vector2Int bottomOffset = new Vector2Int(0, -1);
         Vector2Int rightOffset = new Vector2Int(1, 0);
@@ -20,10 +22,10 @@ public class DoorKey : AItem
         roomManagerService.GetRoomFromCurrentOffset(rightOffset)?.GetComponent<RoomHandler>().OpenLeftDoor();
         roomManagerService.GetRoomFromCurrentOffset(leftOffset)?.GetComponent<RoomHandler>().OpenRightDoor();
 
-        Destroy(gameObject);
+        inventoryManagerService.DeleteItemFromInventory(this);
     }
 
-    public override void Equip()
+    public override void Attack()
     {
     }
 

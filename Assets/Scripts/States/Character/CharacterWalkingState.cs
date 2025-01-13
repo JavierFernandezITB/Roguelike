@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class CharacterWalkingState : ACharacterBaseState
 {
+    private float oldHealth;
+
     public override void EnterState(CharacterStateManager character)
     {
         Debug.Log("Character Entered State: Walking");

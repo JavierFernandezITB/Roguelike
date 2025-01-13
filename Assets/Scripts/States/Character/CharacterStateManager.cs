@@ -11,6 +11,7 @@ public class CharacterStateManager : ServicesReferences
 
     public CharacterIdleState idleState = new CharacterIdleState();
     public CharacterWalkingState walkingState = new CharacterWalkingState();
+    public CharacterHurtState hurtState = new CharacterHurtState();
 
     // Character stuff
     public float Health = 100f;
@@ -20,8 +21,11 @@ public class CharacterStateManager : ServicesReferences
     // Some useful variables.
     public Animator animator;
 
+    public SpriteRenderer spriteRenderer;
+    public WeaponParent weaponParent;
     public Vector2 moveInput;
     public Vector3 moveDirection;
+    public Vector3 mousePos;
     public CharacterControls controls;
     public Image uiHealth;
 
@@ -31,15 +35,17 @@ public class CharacterStateManager : ServicesReferences
     {
         base.GetServices();
         base.Persist<Character>();
+
+        //Setup
+        weaponParent = transform.GetChild(0).GetComponent<WeaponParent>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        controls = new CharacterControls();
+        controls.Enable();
     }
 
     void Start()
     {
-        //Setup
-        animator = GetComponent<Animator>();
-        controls = new CharacterControls();
-        controls.Enable();
-
         //FSM
         currentCharacterState = idleState;
         currentCharacterState.EnterState(this);
@@ -50,6 +56,9 @@ public class CharacterStateManager : ServicesReferences
         // Local Character Variables.
         moveInput = controls.Character.Move.ReadValue<Vector2>();
         moveDirection = new Vector2(moveInput.x, moveInput.y).normalized;
+        mousePos = GetPointerInput();
+
+
 
         // Ui updates.
         UpdateUIHealth();
@@ -58,10 +67,35 @@ public class CharacterStateManager : ServicesReferences
         currentCharacterState.UpdateState(this);
     }
 
+    private void OnEnable()
+    {
+        controls.Character.Attack.performed += weaponParent.PerformAttack;
+    }
+
+    private void OnDisable()
+    {
+        controls.Character.Attack.performed -= weaponParent.PerformAttack;
+    }
+
+    public Vector2 GetPointerInput()
+    {
+        mousePos = controls.Character.MousePointerPosition.ReadValue<Vector2>();
+        mousePos.z = Camera.main.nearClipPlane;
+        return Camera.main.ScreenToWorldPoint(mousePos);
+    }
+
     public void SwitchState(ACharacterBaseState newState)
     {
         currentCharacterState = newState;
         currentCharacterState.EnterState(this);
+    }
+
+    public void DealDamage(float amount)
+    {
+        if (currentCharacterState == hurtState)
+            return;
+        Health -= amount;
+        SwitchState(hurtState);
     }
 
     public void UpdateUIHealth()
