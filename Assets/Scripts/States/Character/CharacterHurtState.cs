@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterHurtState : ACharacterBaseState
 {
-    private float hurtDelay = 0.75f;
+    private float hurtDelay = 0.25f;
     public Color hurtColor = Color.red; // Color when hurt
     private Color originalColor; // Store the original color of the sprite
 

@@ -21,14 +21,13 @@ public class EnemyStateManager : ServicesReferences
     // Some useful variables.
     public GameObject target;
     public Animator animator;
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     // Code lol
 
     void Awake()
     {
         base.GetServices();
-        base.Persist<EnemyStateManager>();
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -51,5 +50,10 @@ public class EnemyStateManager : ServicesReferences
     {
         currentCharacterState = newState;
         currentCharacterState.EnterState(this);
+    }
+
+    public void DestroyEntity()
+    {
+        Destroy(this.gameObject);
     }
 }
