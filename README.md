@@ -1,4 +1,4 @@
-# README del Juego "Roguelike"
+# "Roguelike"
 
 ## ¡Bienvenido a Roguelike!
 
