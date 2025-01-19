@@ -11,6 +11,7 @@ public class ItemShop : ServicesReferences
     public ItemSO[] currentItemsInShop;
     public ItemsDatabaseSO itemsDatabase;
     public List<ItemSO> itemsThatCanBeSold;
+    public int currentListIndex = 0;
 
     public int itemRotationCooldownMinutes = 5;
 
@@ -25,33 +26,26 @@ public class ItemShop : ServicesReferences
                 itemsThatCanBeSold.Add(itemsDatabase.currentActiveItems[i]);
         }
 
-        StartCoroutine(StoreRotationCoroutine());
+        RotateStore();
     }
 
-    public IEnumerator StoreRotationCoroutine()
+    public void RotateStore()
     {
-        int currentListIndex = 0;
-        // uso true por que nunca debería parar lol
-        while (true)
+        for (int i = 0; i < 3; i++)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                int randnum = Random.Range(0, itemsThatCanBeSold.Count);
-                Debug.Log(randnum);
-                currentItemsInShop[i] = itemsThatCanBeSold[randnum];
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                Debug.Log($"wawa {shopUiComponent.transform.GetChild(0).transform.GetChild(0)}");
-
-                shopUiComponent.transform.GetChild(i).GetComponent<ShopSlot>().OnItemClicked += BuyItem;
-                shopUiComponent.transform.GetChild(i).GetComponent<ShopSlot>().currentItemInSlot = currentItemsInShop[i];
-                shopUiComponent.transform.GetChild(i).transform.GetChild(0).GetComponent<Text>().text = $"{currentItemsInShop[i].price} Coins";
-                shopUiComponent.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().sprite = currentItemsInShop[i].sprite;
-            }
-            yield return new WaitForSeconds(itemRotationCooldownMinutes * 60);
+            int randnum = Random.Range(0, itemsThatCanBeSold.Count);
+            Debug.Log(randnum);
+            currentItemsInShop[i] = itemsThatCanBeSold[randnum];
         }
+        for (int i = 0; i < 3; i++)
+        {
+
+            shopUiComponent.transform.GetChild(i).GetComponent<ShopSlot>().OnItemClicked += BuyItem;
+            shopUiComponent.transform.GetChild(i).GetComponent<ShopSlot>().currentItemInSlot = currentItemsInShop[i];
+            shopUiComponent.transform.GetChild(i).transform.GetChild(0).GetComponent<Text>().text = $"{currentItemsInShop[i].price} Coins";
+            shopUiComponent.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().sprite = currentItemsInShop[i].sprite;
+        }
+
     }
 
     public void BuyItem(ShopSlot obj)
@@ -74,6 +68,8 @@ public class ItemShop : ServicesReferences
     {
         if (other.CompareTag("Player"))
         {
+            if (shopUiComponent == null)
+                shopUiComponent = GameObject.Find("/Main Camera/MainUI/Panel/Shop");
             shopUiComponent.SetActive(true);
         }
     }
@@ -82,6 +78,8 @@ public class ItemShop : ServicesReferences
     {
         if (other.CompareTag("Player"))
         {
+            if (shopUiComponent == null)
+                shopUiComponent = GameObject.Find("/Main Camera/MainUI/Panel/Shop");
             shopUiComponent.SetActive(false);
         }
     }

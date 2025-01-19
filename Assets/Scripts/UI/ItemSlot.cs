@@ -23,6 +23,7 @@ public class ItemSlot : ServicesReferences
 
     public void ResetSlot()
     {
+        itemImageSlotObject = transform.GetChild(0).GetComponent<Image>();
         this.itemImageSlotObject.gameObject.SetActive(false);
         isSlotEmpty = true;
     }

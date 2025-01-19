@@ -15,4 +15,5 @@ public class ItemSO : ScriptableObject
     public bool canBeUsed;
     public bool canBeDropped;
     public bool canBeBought;
+    public bool isInDropPool;
 }

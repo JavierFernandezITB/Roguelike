@@ -3540,18 +3540,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f790ab95ca38c4a8d18acd9c1642ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onOpenAllDoors:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1341995605844866761}
+        m_TargetAssemblyTypeName: RoomHandler, Assembly-CSharp
+        m_MethodName: OpenAllDoors
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOpenTopDoor:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1341995605844866761}
+        m_TargetAssemblyTypeName: RoomHandler, Assembly-CSharp
+        m_MethodName: OpenTopDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOpenBottomDoor:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1341995605844866761}
+        m_TargetAssemblyTypeName: RoomHandler, Assembly-CSharp
+        m_MethodName: OpenBottomDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOpenRightDoor:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1341995605844866761}
+        m_TargetAssemblyTypeName: RoomHandler, Assembly-CSharp
+        m_MethodName: OpenRightDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOpenLeftDoor:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1341995605844866761}
+        m_TargetAssemblyTypeName: RoomHandler, Assembly-CSharp
+        m_MethodName: OpenLeftDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isRoomCompleted: 0
   enemiesToSpawn: 5
+  maxEnemiesInRoom: 4
   enemiesRemaining: 0
   isKeyDropped: 0
   keyPrefab: {fileID: 1074644099724612341, guid: e1a528f708ba5ad42a069292ba552e56, type: 3}
   enemiesPool: []
+  spawnedEnemiesPool: []
   spawnPoints:
   - {fileID: 8443816826747400228}
   - {fileID: 8730852095838947156}
   - {fileID: 5418395039553484075}
   - {fileID: 5999394044425235958}
   runManager: {fileID: 0}
+  roomManagerService: {fileID: 0}
 --- !u!1 &5248789688887816332
 GameObject:
   m_ObjectHideFlags: 0

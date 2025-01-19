@@ -48,11 +48,6 @@ public class WeaponParent : MonoBehaviour
 
     public void PerformAttack(InputAction.CallbackContext obj)
     {
-        try
-        {
-            animator.SetTrigger("Attack");
-        }
-        catch { }
         currentItem.Attack();
     }
 }

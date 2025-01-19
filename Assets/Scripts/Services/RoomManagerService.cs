@@ -40,6 +40,28 @@ public class RoomManagerService : ServicesReferences
 
     public void GenerateDungeon()
     {
+        // Lo ponemos todo por defecto. (Un poco xd, pero se buggea la generación si no lo hago. No se cual es el problema, pero no quiero reescribir esto.)
+
+        maxRoomCount = 5 * difficultyMultiplier;
+        
+        minRoomCount = 2 * difficultyMultiplier;
+
+        roomCount = 0;
+
+        pathCount = 0;
+
+        roomGrid = null;
+
+        gridCenter = new Vector2Int(0,0);
+
+        currentRoom = new Vector2Int(0, 0);
+
+        lastRoomPosition = new Vector2Int(0, 0);
+
+        lastDirection = 0;
+
+        roomDirection = 0;
+
         // Preparamos todo.
         InitializeRoomGeneration();
 
@@ -54,11 +76,6 @@ public class RoomManagerService : ServicesReferences
     private void InitializeRoomGeneration()
     {
         // Según el nivel de dificultad, generamos más salas.
-        maxRoomCount *= difficultyMultiplier;
-        minRoomCount *= difficultyMultiplier;
-
-        xGridSize *= difficultyMultiplier;
-        yGridSize *= difficultyMultiplier;
 
         gridCenter = new Vector2Int(xGridSize / 2, yGridSize / 2);
         roomGrid = new GameObject[xGridSize, yGridSize];

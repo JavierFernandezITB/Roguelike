@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RoomHandler : ServicesReferences
 {
+    public UnityEvent onOpenAllDoors;
+    public UnityEvent onOpenTopDoor;
+    public UnityEvent onOpenBottomDoor;
+    public UnityEvent onOpenRightDoor;
+    public UnityEvent onOpenLeftDoor;
+
     public bool isRoomCompleted = false;
     public int enemiesToSpawn = 5;
     public int maxEnemiesInRoom = 4;
@@ -20,6 +27,7 @@ public class RoomHandler : ServicesReferences
     {
         roomManagerService = GameObject.Find("/RoomManagerService").GetComponent<RoomManagerService>();
         runManager = GameObject.Find("/RunManager").GetComponent<RunManager>();
+        runManager.roomsInCurrentRun.Add(this);
         enemiesPool = new List<GameObject>();
         for (int i = 0; i < enemiesToSpawn; i++)
         {
@@ -29,12 +37,11 @@ public class RoomHandler : ServicesReferences
             enemiesPool.Add(newEnemy);
             enemiesRemaining += 1;
         }
-
     }
 
     private void Update()
     {
-        if (enemiesRemaining <= 0 && !isKeyDropped)
+        if (enemiesRemaining <= 0 && !isKeyDropped && !runManager.isRunCompleted)
         {
             isKeyDropped = true;
             GameObject key = Instantiate(keyPrefab);

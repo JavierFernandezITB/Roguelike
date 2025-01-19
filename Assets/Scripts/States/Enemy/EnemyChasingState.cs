@@ -24,7 +24,7 @@ public class EnemyChasingState : AEnemyBaseState
             float distanceToPlayer = Vector3.Distance(enemy.transform.position, enemy.target.transform.position);
 
             // Check if the enemy should move
-            if (distanceToPlayer <= 1f)
+            if (distanceToPlayer <= enemy.Range)
             {
                 enemy.animator.SetBool("Walking", false);
                 enemy.SwitchState(enemy.attackingState);

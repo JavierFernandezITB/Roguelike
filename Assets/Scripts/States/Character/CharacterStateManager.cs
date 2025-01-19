@@ -12,6 +12,7 @@ public class CharacterStateManager : ServicesReferences
     public CharacterIdleState idleState = new CharacterIdleState();
     public CharacterWalkingState walkingState = new CharacterWalkingState();
     public CharacterHurtState hurtState = new CharacterHurtState();
+    public CharacterDeadState deadState = new CharacterDeadState();
 
     // Character stuff
     public float Health = 100f;
@@ -28,13 +29,14 @@ public class CharacterStateManager : ServicesReferences
     public Vector3 mousePos;
     public CharacterControls controls;
     public Image uiHealth;
+    public AudioClip hurtSound;
 
     // Code lol
 
     void Awake()
     {
         base.GetServices();
-        base.Persist<Character>();
+        base.Persist<CharacterStateManager>();
 
         //Setup
         weaponParent = transform.GetChild(0).GetComponent<WeaponParent>();
@@ -95,7 +97,10 @@ public class CharacterStateManager : ServicesReferences
         if (currentCharacterState == hurtState)
             return;
         Health -= amount;
-        SwitchState(hurtState);
+        if (Health > 0)
+            SwitchState(hurtState);
+        else
+            SwitchState(deadState);
     }
 
     public void UpdateUIHealth()

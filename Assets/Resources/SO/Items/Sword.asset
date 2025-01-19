@@ -24,3 +24,4 @@ MonoBehaviour:
   canBeUsed: 0
   canBeDropped: 1
   canBeBought: 1
+  isInDropPool: 1

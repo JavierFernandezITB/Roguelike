@@ -104,7 +104,8 @@ MonoBehaviour:
   attackBlocked: 0
   attackDelay: 1
   damagePerBullet: 15
-  bullet: {fileID: 8766862705225731363, guid: f13e3874d335c1e4d81518d605ef434c, type: 3}
+  bulletPrefab: {fileID: 8766862705225731363, guid: f13e3874d335c1e4d81518d605ef434c, type: 3}
+  poolSize: 2
 --- !u!61 &2251426403225547998
 BoxCollider2D:
   m_ObjectHideFlags: 0

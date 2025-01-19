@@ -10,6 +10,8 @@ public class InventoryManagerService : ServicesReferences
 {
     public ItemSlot inventorySlotPrefab;
 
+    public ItemsDatabaseSO itemDatabase;
+
     public RectTransform inventoryRectTransform;
 
     public InventoryDescription inventoryDescription;
@@ -55,7 +57,7 @@ public class InventoryManagerService : ServicesReferences
 
     public void Update()
     {
-        uiCoinsDisplay.text = $"Coin Purse: {coins}";
+        uiCoinsDisplay.text = $"{coins}";
     }
 
     public bool SubstractCoins(int amount)
@@ -228,7 +230,8 @@ public class InventoryManagerService : ServicesReferences
 
     public void DisplayInventoryUI()
     {
-        Debug.Log("inventory on / off");
+        if (inventoryBackground == null)
+            inventoryBackground = GameObject.Find("/Main Camera/MainUI/Panel/InventoryBackground");
         // obsoleto pero la alternativa no rula lol
         if (inventoryBackground.activeSelf)
             HideInventoryUI();

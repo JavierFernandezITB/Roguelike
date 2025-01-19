@@ -15,12 +15,12 @@ public class DoorKey : AItem
 
         RoomHandler currentRoomHandle = roomManagerService.GetCurrentRoomObject().GetComponent<RoomHandler>();
         currentRoomHandle.isRoomCompleted = true;
-        currentRoomHandle.OpenAllDoors();
+        currentRoomHandle.onOpenAllDoors.Invoke();
 
-        roomManagerService.GetRoomFromCurrentOffset(topOffset)?.GetComponent<RoomHandler>().OpenBottomDoor();
-        roomManagerService.GetRoomFromCurrentOffset(bottomOffset)?.GetComponent<RoomHandler>().OpenTopDoor();
-        roomManagerService.GetRoomFromCurrentOffset(rightOffset)?.GetComponent<RoomHandler>().OpenLeftDoor();
-        roomManagerService.GetRoomFromCurrentOffset(leftOffset)?.GetComponent<RoomHandler>().OpenRightDoor();
+        roomManagerService.GetRoomFromCurrentOffset(topOffset)?.GetComponent<RoomHandler>().onOpenBottomDoor.Invoke();
+        roomManagerService.GetRoomFromCurrentOffset(bottomOffset)?.GetComponent<RoomHandler>().onOpenTopDoor.Invoke();
+        roomManagerService.GetRoomFromCurrentOffset(rightOffset)?.GetComponent<RoomHandler>().onOpenLeftDoor.Invoke();
+        roomManagerService.GetRoomFromCurrentOffset(leftOffset)?.GetComponent<RoomHandler>().onOpenRightDoor.Invoke();
 
         inventoryManagerService.DeleteItemFromInventory(this);
     }

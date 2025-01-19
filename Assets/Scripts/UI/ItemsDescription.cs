@@ -16,7 +16,14 @@ public class InventoryDescription : ServicesReferences
 
     public void ResetDescription()
     {
-        itemImage.gameObject.SetActive(false);
+        try
+        {
+            itemImage.gameObject.SetActive(false);
+        }
+        catch
+        {
+            itemImage = null;
+        }
         itemTitle.text = "";
         itemDescription.text = "";
     }

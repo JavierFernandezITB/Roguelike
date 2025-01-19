@@ -18,6 +18,7 @@ public class EnemyStateManager : ServicesReferences
     public float MaxHealth = 100f;
     public float Damage = 5f;
     public float Speed = 5f;
+    public float Range = 5f;
     public int MinimumCoinReward = 5;
     public int MaximumCoinReward = 15;
     public EEnemyType enemyType = EEnemyType.Melee;
@@ -27,6 +28,7 @@ public class EnemyStateManager : ServicesReferences
     public GameObject target;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+    public AudioClip hurtSound;
 
     // Code lol
 
@@ -59,13 +61,18 @@ public class EnemyStateManager : ServicesReferences
 
     public void DealDamage(float amount)
     {
-        if (currentEnemyState == hurtState)
+        if (currentEnemyState == hurtState || currentEnemyState == attackingState)
             return;
         Health -= amount;
         if (Health <= 0)
             SwitchState(deadState);
         else
             SwitchState(hurtState);
+    }
+
+    public GameObject SpawnDrop(GameObject prefab)
+    {
+        return Instantiate(prefab);
     }
 
     public void DestroyEntity()

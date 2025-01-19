@@ -16,6 +16,12 @@ public class ItemInventoryActions : ServicesReferences
 
     public void ResetActions()
     {
+        // Ok, unity peta aquí y he intentado de todo pero no funciona, así que lo siento, pero el ibuprofeno no da para tanto. :D
+
+        UseButton = transform.GetChild(0).GetComponent<Button>();
+        EquipButton = transform.GetChild(1).GetComponent<Button>();
+        DropButton = transform.GetChild(2).GetComponent<Button>();
+
         UseButton.gameObject.SetActive(false);
         UseButton.onClick.RemoveAllListeners();
         EquipButton.gameObject.SetActive(false);

@@ -19,7 +19,10 @@ public class EnemyAttackingState : AEnemyBaseState
             enemy.target.GetComponent<CharacterStateManager>().DealDamage(enemy.Damage);
             enemy.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
             enemy.StartCoroutine(DelayBomberDestruction(enemy));
-            
+        } else if (enemy.enemyType == EEnemyType.Shooter)
+        {
+            Rifle rifle = enemy.transform.GetChild(0).GetComponent<Rifle>();
+            rifle.Attack(enemy.target);
         }
         enemy.SwitchState(enemy.idleState);
     }

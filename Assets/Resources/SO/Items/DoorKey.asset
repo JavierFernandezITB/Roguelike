@@ -23,4 +23,5 @@ MonoBehaviour:
   canBeEquipped: 0
   canBeUsed: 1
   canBeDropped: 1
-  canBeBought: 1
+  canBeBought: 0
+  isInDropPool: 0

@@ -244,9 +244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0127e6b515c8fc1408fefa6b4785f180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statuePrefab: {fileID: 8440898876575352905, guid: da8d2d0579d8447498d6fa8b38c983f9, type: 3}
   availableEnemyList:
   - {fileID: 3909905802120720440, guid: 552f0e540abf9534b949c8c68cbaa252, type: 3}
   - {fileID: 466792706950120245, guid: 9359fa4bea282844ebf6b8fc7d8a6951, type: 3}
+  - {fileID: 1685551406741946193, guid: 91cb4a6f59ba1574297594d113536d86, type: 3}
+  isRunCompleted: 0
+  roomsInCurrentRun: []
 --- !u!1001 &3808040646785478487
 PrefabInstance:
   m_ObjectHideFlags: 0

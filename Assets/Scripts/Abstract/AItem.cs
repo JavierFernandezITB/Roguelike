@@ -55,7 +55,6 @@ public abstract class AItem : ServicesReferences
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.tag);
         if (other.CompareTag("Player"))
         {
             onPickupAction = ctx => OnPickup();

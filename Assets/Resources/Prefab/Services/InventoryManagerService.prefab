@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySlotPrefab: {fileID: 8714538840416053733, guid: d78b2def8ad7e4c4cb58c7b218b45bc6, type: 3}
+  itemDatabase: {fileID: 11400000, guid: 956a415b975c33841b55aebe6e3f568b, type: 2}
   inventoryRectTransform: {fileID: 0}
   inventoryDescription: {fileID: 0}
+  inventoryActions: {fileID: 0}
   inventoryBackground: {fileID: 0}
   inventorySize: 6
   testItem: {fileID: 5265595522090280922, guid: e1a528f708ba5ad42a069292ba552e56, type: 3}
+  uiCoinsDisplay: {fileID: 0}
+  coins: 0
